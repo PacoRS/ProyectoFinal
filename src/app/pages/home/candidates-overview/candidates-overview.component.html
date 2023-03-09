@@ -8,7 +8,7 @@
             <form class="example-form">
                 <mat-label>{{'Search by Name :'|translate}}</mat-label>
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Antonio Jesus">
+                    <input matInput placeholder="Nombre">
                 </mat-form-field>
             </form>
         </div>
@@ -17,8 +17,8 @@
             <button mat-raised-button color="primary">{{'Search'|translate}}</button>
             <button mat-button [matMenuTriggerFor]="menu">{{'More Filters'|translate}}</button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>Item 1</button>
-                <button mat-menu-item>Item 2</button>
+                <button mat-menu-item>Nombre</button>
+                <button mat-menu-item>Rol</button>
             </mat-menu>
         </div>
     </div>
@@ -59,8 +59,20 @@
 
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef> {{"Status" | translate}} </th>
-                    <td mat-cell *matCellDef="let element"> {{getEnumValueFromOrder(element.status,Status)}}  </td>
+                    <td mat-cell *matCellDef="let element"> {{getEnumValueFromOrder(element.status,Status)}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="Botones">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      <button mat-icon-button color="primary" (click)="abrirPopup(element)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteCandidate(element)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
 
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

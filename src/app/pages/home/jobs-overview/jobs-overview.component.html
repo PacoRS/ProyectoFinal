@@ -9,7 +9,7 @@
       <form class="example-form">
         <mat-label>{{'Busqueda por Nombre :'|translate}}</mat-label>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Antonio Jesus">
+          <input matInput placeholder="Nombre">
         </mat-form-field>
       </form>
     </div>
@@ -35,37 +35,37 @@
         </form>
       </div>
       <div class="botones-derecha2">
-        <button mat-raised-button color="primary" (click)="abrirPopup()">+ {{'Add position'|translate}}</button>
+        <button mat-raised-button color="primary" (click)="abrirPopup()">+{{'Add trabajo'|translate}}</button>
         <mat-icon class="boton" (click)="Refresh()">autorenew</mat-icon>
         <mat-icon>settings</mat-icon>
       </div>
     </div>
     <div class="contenedor-tabla">
-      <table mat-table mat-row-hover [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="project">
           <th mat-header-cell *matHeaderCellDef> {{"Proyecto" | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{element.project}} </td>
+          <td mat-cell *matCellDef="let element" (click)="showElement(element)" class="resaltado"> {{element.project}} </td>
         </ng-container>
 
         <ng-container matColumnDef="area">
           <th mat-header-cell *matHeaderCellDef> {{"Area" | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+          <td mat-cell *matCellDef="let element" (click)="showElement(element)" class="resaltado"> {{element.area}} </td>
         </ng-container>
 
         <ng-container matColumnDef="localization">
           <th mat-header-cell *matHeaderCellDef> {{"Localization" | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{getEnumValueFromOrder(element.localization,Localization)}} </td>
+          <td mat-cell *matCellDef="let element" (click)="showElement(element)" class="resaltado"> {{getEnumValueFromOrder(element.localization,Localization)}} </td>
         </ng-container>
 
         <ng-container matColumnDef="creationDate">
           <th mat-header-cell *matHeaderCellDef> {{"Creation date" | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{formatBirthdate(element.creationDate)}} </td>
+          <td mat-cell *matCellDef="let element" (click)="showElement(element)" class="resaltado"> {{formatBirthdate(element.creationDate)}} </td>
         </ng-container>
 
         <ng-container matColumnDef="closeDate">
           <th mat-header-cell *matHeaderCellDef> {{"Closing date" | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{formatBirthdate(element.closeDate)}} </td>
+          <td mat-cell *matCellDef="let element" (click)="showElement(element)" class="resaltado"> {{formatBirthdate(element.closeDate)}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Botones">
@@ -81,7 +81,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showElement(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <mat-paginator #paginator [length]="offers.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"
         [hidePageSize]="true">

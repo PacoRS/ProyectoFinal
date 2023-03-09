@@ -86,10 +86,8 @@
 .boton{
     cursor: pointer;
 }
-.mat-row:hover{
+.resaltado:hover{
     background-color: $navy-blue-90 !important;
+    color: white;
     cursor: pointer;
-    .mat-cell{
-        color: white;
-    }
 }

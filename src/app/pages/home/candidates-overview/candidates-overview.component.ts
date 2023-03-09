@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Candidate } from 'src/app/model/candidate';
+import { CandidateStatus } from 'src/app/model/enums/CandidateStatus';
 import { RolStatus } from 'src/app/model/enums/RolStatus';
 import { CandidateService } from 'src/app/services/api/candidate.service';
 import { CreateCandidateComponent } from '../create-candidate/create-candidate.component';
@@ -17,8 +18,8 @@ import { CreateCandidateComponent } from '../create-candidate/create-candidate.c
 export class CandidatesOverviewComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   candidates: Candidate[] = [];
-  Status=RolStatus
-  displayedColumns: string[] = ['name', 'surname', 'description', 'status'];
+  Status=CandidateStatus
+  displayedColumns: string[] = ['name', 'surname', 'description', 'status', 'Botones'];
   dataSource: MatTableDataSource<Candidate>;
 
   
@@ -29,9 +30,11 @@ export class CandidatesOverviewComponent implements OnInit {
     this.GetAllCandidates();
 
   }
-  abrirPopup() {
+  abrirPopup(candidate?: Candidate) {
+    const data = candidate?{mode:'Edit',job:candidate}:{mode:'Create'};
     const dialogRef = this.dialog.open(CreateCandidateComponent,
       {
+        data:data,
         width: '80%',
         height: '80%',
       });
@@ -60,5 +63,10 @@ export class CandidatesOverviewComponent implements OnInit {
       i++;
     }
     return myEnum[order];
+  }
+  deleteCandidate(element:Candidate){
+    this.candidateServ.deleteById(element.id).subscribe(offer => {
+      this.GetAllCandidates();
+    });
   }
 }

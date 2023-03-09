@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Candidate } from 'src/app/model/candidate';
+import { Localization } from 'src/app/model/enums/Localization';
 import { Job } from 'src/app/model/job';
 
 @Component({
@@ -16,6 +17,7 @@ export class JobComponent implements OnInit {
   displayedColumns: string[] = ['name', 'surname', 'status', 'contact'];
   dataSource: MatTableDataSource<Candidate>;
   job:Job;
+  Localization:Localization;
   arrayCandidates:number;
   constructor(@Inject(MAT_DIALOG_DATA) public data: {mode:string,job:Job}) { }
 

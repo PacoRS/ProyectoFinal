@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CandidateService } from "../../../services/api/candidate.service";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Candidate } from "../../../model/candidate";
@@ -9,9 +9,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import {JobService} from "../../../services/api/job.service";
 import {firstValueFrom} from "rxjs";
-import {SubRol} from "../../../model/enums/SubRol";
 import {CandidateStatus} from "../../../model/enums/CandidateStatus";
 import {ContactMethod} from "../../../model/enums/ContactMethod";
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Localization } from 'src/app/model/enums/Localization';
+import { Rol } from 'src/app/model/enums/Rol';
 
 
 @Component({
@@ -24,18 +26,19 @@ export class CreateCandidateComponent implements OnInit {
 
   statusValues: CandidateStatus[] = Object.values(CandidateStatus);
   contactoValues: ContactMethod[] = Object.values(ContactMethod);
-  displayedColumns = ['select', 'rol', 'description', 'sub_rol', 'status'];
+  displayedColumns = ['select', 'project', 'area', 'localization', 'rol'];
   //dataSource = jobs;
   dataSource:MatTableDataSource<Job>;
   selection = new SelectionModel<Job>(true, []);
   job: Job;
-
-  sR = SubRol;
+  localization=Localization
+  rol=Rol
   // selected = this.selection.selected;
 
 
   constructor(private candidateService: CandidateService, private fb: FormBuilder, private snack: MatSnackBar,
-    private translateService: TranslateService, private jobS:JobService) {
+    private translateService: TranslateService, private jobS:JobService,
+    @Inject(MAT_DIALOG_DATA) public data: {mode:string,candidate?:Candidate}) {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required]],
@@ -56,9 +59,19 @@ export class CreateCandidateComponent implements OnInit {
   }).catch(async error => {
       this.snack.open(await firstValueFrom(this.translateService.get("Error en la peticion, no se pudo cargar las ofertas")), 'Ok', {duration: 5000});
     })
+    if(this.data.candidate){
+      this.form.get('name')?.setValue(this.data.candidate.name);
+      this.form.get('surname')?.setValue(this.data.candidate.surname);
+      this.form.get('description')?.setValue(this.data.candidate.description);
+      this.form.get('rejection_reason')?.setValue(this.data.candidate.rejectionReason);
+      this.form.get('cv_date')?.setValue(this.data.candidate.cvDate);
+      this.form.get('interview_date')?.setValue(this.data.candidate.interviewDate);
+      this.form.get('hiring_date')?.setValue(this.data.candidate.hiringDate);
+      this.form.get('first_contact_date')?.setValue(this.data.candidate.firstContactDate);
+      this.form.get('contacto')?.setValue(this.data.candidate.contact);
+      this.form.get('status')?.setValue(this.data.candidate.status);
+    }
   }
-
-
   getSelected(): void {
     const selected = this.selection.selected;
     selected.values

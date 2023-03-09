@@ -1,1 +1,35 @@
-<button (click)="mostrar()">Mostrar</button>
+<div class="general">
+    <h2 class="title">Detalles de la oferta de trabajo</h2>
+    <div class="container1">
+        <div fxLayout="row">
+            <div fxLayout="column" fxFlex="50">
+                <mat-form-field>
+                    <mat-label>Proyecto</mat-label>
+                    <input matInput placeholder="Proyecto" [value]="candidate.name" readonly>
+                </mat-form-field>
+        
+                <mat-form-field>
+                    <mat-label>Area</mat-label>
+                    <input matInput placeholder="Area" [value]="candidate.surname" readonly>
+                </mat-form-field>
+        
+            </div>
+            <div fxLayout="column" fxFlex="50">
+                <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <input matInput placeholder="Estado" [value]="candidate.contact" readonly>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Rol</mat-label>
+                    <input matInput placeholder="Rol" [value]="candidate.description" readonly>
+                </mat-form-field>
+        
+                <mat-form-field>
+                    <mat-label>Subrol</mat-label>
+                    <input matInput placeholder="Subrol" [value]="candidate.status" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

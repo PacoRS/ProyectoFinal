@@ -36,6 +36,9 @@ export class CandidateService {
   getAll(): Observable<Candidate[]> {
     return this.http.get<Candidate[]>(`${environment.api.url}${environment.api.endpoints.candidateGetAll}`);
   }
+  deleteById(id?: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.api.url}${environment.api.endpoints.candidateDelete}${id}`);
+  }
 
   private _getValueOrdinal(enumObj: any, value: any) {
     let index =-1;
